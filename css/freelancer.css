@@ -206,6 +206,11 @@ section.success {
     max-width: 400px;
 }
 
+#portfolio .portfolio-item .portfolio-link img,
+.modal-content img{
+    border: 1px solid #333;
+}
+
 #portfolio .portfolio-item .portfolio-link .caption {
     position: absolute;
     width: 100%;
@@ -442,4 +447,8 @@ footer .footer-below {
     -webkit-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
+}
+
+.profile-image {
+    border-radius: 50%;
 }
