@@ -104,6 +104,7 @@ header .intro-text .name {
 }
 
 header .intro-text .skills {
+    display: block;
     font-size: 1.25em;
     font-weight: 300;
 }
