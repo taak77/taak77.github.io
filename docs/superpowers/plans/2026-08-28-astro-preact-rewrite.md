@@ -180,6 +180,7 @@ node_modules/
 dist/
 .astro/
 .worktrees/
+.superpowers/
 test-results/
 playwright-report/
 .DS_Store
@@ -559,7 +560,7 @@ Expected: both content tests pass, and the build succeeds — which proves the Z
 - [ ] **Step 6: Commit**
 
 ```bash
-git add src/content.config.ts src/content/portfolio tests/content-files.test.ts
+git add src/content.config.ts src/content/portfolio tests/content-files.check.mjs
 git commit -m "feat: add portfolio content collection with 15 validated entries"
 ```
 
