@@ -16,6 +16,15 @@ Two motivations drive the stack choice, both stated by the owner:
 2. **Debt removal.** Bootstrap 3.2, jQuery 1.11, and Font Awesome 4.1 are a
    decade past support.
 
+## Workflow
+
+All rewrite work happens on `feat/astro-rewrite`, checked out as a git worktree
+at `.worktrees/astro-rewrite`. `main` stays untouched until the work is reviewed
+and merged, so the live site keeps serving the current `index.html` throughout.
+
+The new `.gitignore` must include `.worktrees/`. It is currently ignored only
+locally via `.git/info/exclude`, which does not travel with the repository.
+
 ## Non-goals
 
 Explicitly out of scope, by owner decision:
