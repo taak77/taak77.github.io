@@ -1,0 +1,21 @@
+docs/superpowers/specs/2026-08-28-astro-preact-rewrite-design.md
+  s_5887a8a8004137::t_3b20dd57cca946 134-140
+  s_5887a8a8004137::t_1ac87d58a47c2c 1-133,141-373,383-410
+  s_5887a8a8004137::t_5b60147d44acc6 374-382
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "8422867f2b77739d59e8fd63d1bceeaa96eda504",
+  "prompts": {},
+  "sessions": {
+    "s_5887a8a8004137": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "89e5bd93-efe8-46b1-9e75-db757574847c",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
