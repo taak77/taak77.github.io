@@ -51,13 +51,14 @@ Every task's requirements implicitly include this section.
 | `src/components/Footer.astro` | Navy footer + social buttons |
 | `src/components/ScrollTop.astro` | Mobile-only scroll-to-top anchor |
 | `src/components/StarDivider.astro` | The `hr.star-*` divider, `light` and `primary` variants |
-| `src/components/icons/*.astro` | Six inline SVG icons, replacing Font Awesome |
+| `src/components/icons/*.astro` | Seven inline SVG icons, replacing Font Awesome |
+| `src/components/icons/star-path.ts` | Star `d` attribute, shared by `Star.astro` and the modal island |
 | `src/components/Navbar.tsx` | Preact island: shrink, mobile toggle, scrollspy |
 | `src/components/PortfolioModal.tsx` | Preact island: native `<dialog>` for all 15 items |
 | `public/**` | Verbatim static assets at unchanged URLs |
 | `playwright.config.ts` | Test runner against `astro preview` |
 | `tests/fixtures/legacy-index.html` | Frozen original page, the parity comparison source |
-| `tests/content-files.test.ts` | Node test: 15 entries exist and are well-formed |
+| `tests/content-files.check.mjs` | Node test: 15 entries exist and are well-formed |
 | `tests/parity.spec.ts` | The load-bearing test: rendered content matches legacy exactly |
 | `tests/behavior.spec.ts` | Modal, navbar, and network assertions |
 | `.github/workflows/deploy.yml` | Test, build, deploy to Pages |
@@ -113,7 +114,7 @@ Expected: `v22.17.0` and `10.9.2`. If you see `v8.11.3`, the stale `/usr/local/b
     "build": "astro build",
     "preview": "astro preview",
     "test": "playwright test",
-    "test:content": "node --test tests/content-files.test.ts",
+    "test:content": "node --test tests/content-files.check.mjs",
     "compare": "bash scripts/compare.sh"
   },
   "dependencies": {
@@ -368,6 +369,9 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
+  // Explicit: the default testMatch also grabs *.test.* and *.mjs, which would
+  // make Playwright try to run the node:test content check.
+  testMatch: '**/*.spec.ts',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
@@ -403,7 +407,7 @@ git commit -m "refactor: move assets to public/ and delete Bootstrap 3 implement
 ## Task 4: Content collection and the 15 project entries
 
 **Files:**
-- Create: `src/content.config.ts`, `src/content/portfolio/*.md` (15 files), `tests/content-files.test.ts`
+- Create: `src/content.config.ts`, `src/content/portfolio/*.md` (15 files), `tests/content-files.check.mjs`
 
 **Interfaces:**
 - Consumes: asset paths from Task 3.
@@ -411,9 +415,9 @@ git commit -m "refactor: move assets to public/ and delete Bootstrap 3 implement
 
 - [ ] **Step 1: Write the failing test**
 
-Create `tests/content-files.test.ts`:
+Create `tests/content-files.check.mjs`. This is plain ESM, **not** TypeScript: Node 22.17.0 cannot execute a `.ts` test file without `--experimental-strip-types`, and the `.check.mjs` suffix also keeps it outside Playwright's `testMatch`.
 
-```ts
+```js
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
@@ -426,9 +430,9 @@ test('there are exactly 15 portfolio entries', () => {
   assert.equal(files.length, 15);
 });
 
-test('every entry has required frontmatter, a body, and unique order', () => {
+test('every entry has required frontmatter, a body, and a unique order', () => {
   const files = readdirSync(DIR).filter((f) => f.endsWith('.md'));
-  const orders: number[] = [];
+  const orders = [];
 
   for (const file of files) {
     const raw = readFileSync(`${DIR}/${file}`, 'utf8');
@@ -441,11 +445,15 @@ test('every entry has required frontmatter, a body, and unique order', () => {
     }
     assert.ok(body.trim().length > 0, `${file}: empty description body`);
 
-    const order = Number(frontmatter.match(/^order:\s*(\d+)/m)![1]);
-    orders.push(order);
+    const orderMatch = frontmatter.match(/^order:\s*(\d+)/m);
+    assert.ok(orderMatch, `${file}: order is not an integer`);
+    orders.push(Number(orderMatch[1]));
   }
 
-  assert.deepEqual([...orders].sort((a, b) => a - b), Array.from({ length: 15 }, (_, i) => i + 1));
+  assert.deepEqual(
+    [...orders].sort((a, b) => a - b),
+    Array.from({ length: 15 }, (_, i) => i + 1),
+  );
 });
 ```
 
@@ -764,21 +772,34 @@ git commit -m "feat: add Tailwind theme tokens, self-hosted fonts, and star divi
 ## Task 6: Layout shell, icons, star divider, and hero
 
 **Files:**
-- Create: `src/components/icons/Star.astro`, `SearchPlus.astro`, `Download.astro`, `ChevronUp.astro`, `LinkedIn.astro`, `GitHub.astro`, `Times.astro`; `src/components/StarDivider.astro`; `src/layouts/BaseLayout.astro`; `src/components/Hero.astro`
+- Create: `src/components/icons/star-path.ts`, `Star.astro`, `SearchPlus.astro`, `Download.astro`, `ChevronUp.astro`, `LinkedIn.astro`, `GitHub.astro`, `Times.astro`; `src/components/StarDivider.astro`; `src/layouts/BaseLayout.astro`; `src/components/Hero.astro`
 - Modify: `src/pages/index.astro`
 
 **Interfaces:**
 - Consumes: `star-divider*` classes and tokens from Task 5.
-- Produces: `BaseLayout.astro` accepting `{ title: string }` and a default `<slot />`, rendering `<head>` and a `[data-nav-sentinel]` element 300px from the top of the document (Task 9 observes it). `StarDivider.astro` accepting `{ variant: 'light' | 'primary' }`. Icon components take no props.
+- Produces: `BaseLayout.astro` accepting `{ title: string }` and a default `<slot />`, rendering `<head>` and a `[data-nav-sentinel]` element 300px from the top of the document (Task 9 observes it). `StarDivider.astro` accepting `{ variant: 'light' | 'primary' }`. Icon components take no props. `STAR_PATH`, a `string` exported from `src/components/icons/star-path.ts`, consumed by Task 8's island.
 
 - [ ] **Step 1: Create the seven inline SVG icons**
 
 All use `currentColor` and `aria-hidden`, since each is decorative and sits beside a text label or an accessible name.
 
+The star is the one icon needed by both an Astro component and a Preact island, so its path lives in a shared constant rather than being written twice.
+
+`src/components/icons/star-path.ts`:
+
+```ts
+export const STAR_PATH =
+  'M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 50-41 50-19 0-40-12l-449-236-449 236q-22 12-40 12-42 0-42-50 0-13 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z';
+```
+
 `src/components/icons/Star.astro`:
 
 ```astro
-<svg viewBox="0 0 1792 1792" fill="currentColor" aria-hidden="true"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 50-41 50-19 0-40-12l-449-236-449 236q-22 12-40 12-42 0-42-50 0-13 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"/></svg>
+---
+import { STAR_PATH } from './star-path';
+---
+
+<svg viewBox="0 0 1792 1792" fill="currentColor" aria-hidden="true"><path d={STAR_PATH} /></svg>
 ```
 
 `src/components/icons/SearchPlus.astro`:
@@ -1133,6 +1154,7 @@ Uses the native `<dialog>` element, which supplies Esc-to-close, the backdrop, a
 
 ```tsx
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { STAR_PATH } from './icons/star-path';
 
 export interface PortfolioModalItem {
   title: string;
@@ -1218,7 +1240,7 @@ export default function PortfolioModal({ items }: Props) {
               <div class="star-divider star-divider--primary" role="presentation">
                 <span class="star-divider__icon">
                   <svg viewBox="0 0 1792 1792" fill="currentColor" aria-hidden="true">
-                    <path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 50-41 50-19 0-40-12l-449-236-449 236q-22 12-40 12-42 0-42-50 0-13 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z" />
+                    <path d={STAR_PATH} />
                   </svg>
                 </span>
               </div>
@@ -1430,7 +1452,7 @@ export default function Navbar() {
     <nav
       data-navbar
       data-shrink={shrink ? 'true' : 'false'}
-      class={`fixed top-0 right-0 left-0 z-1050 bg-brand-primary font-heading font-bold uppercase transition-[padding] duration-300 ${
+      class={`fixed top-0 right-0 left-0 z-[1050] bg-brand-primary font-heading font-bold uppercase transition-[padding] duration-300 ${
         shrink ? 'navbar-shrink sm:py-[10px]' : 'sm:py-[25px]'
       }`}
     >
@@ -1660,7 +1682,7 @@ Shown below 768px only. This also fixes the original's `visble-sm` typo, which s
 import ChevronUp from './icons/ChevronUp.astro';
 ---
 
-<div class="fixed right-[2%] bottom-[2%] z-1049 sm:hidden" data-scroll-top>
+<div class="fixed right-[2%] bottom-[2%] z-[1049] sm:hidden" data-scroll-top>
   <a
     href="#page-top"
     aria-label="Back to top"
@@ -2027,5 +2049,7 @@ Expected: all tests pass; `grep` finds no `http://` references. That absence is 
 **Placeholder scan.** No `TBD`, `TODO`, "similar to Task N", or "add error handling" instructions. Every code step contains complete, runnable content. The one table-driven step (Task 4 Step 4) provides two full worked examples plus every field value for the remaining 13 entries.
 
 **Type consistency.** `PortfolioModalItem` is defined in Task 8 and its exact field names (`title`, `images`, `imageColumns`, `tools`, `description`) are used unchanged in the `index.astro` mapping in Tasks 8 and 10. The collection schema field names in Task 4 (`title`, `order`, `thumbnail`, `images`, `imageColumns`, `tools`) match every consumer. Test selectors are stable across tasks: `[data-portfolio-tile]`, `[data-portfolio-index]`, `[data-portfolio-dialog]`, `[data-modal-title]`, `[data-modal-image]`, `[data-modal-description]`, `[data-modal-tools]`, `[data-nav-sentinel]`, `[data-navbar]`, `[data-nav-toggle]`, `[data-nav-menu]`, `[data-scroll-top]`.
+
+**Pre-flight corrections.** Four defects were found and fixed before execution began: (1) `node --test` cannot run a `.ts` file on Node 22.17.0 — verified empirically — so the content check is `tests/content-files.check.mjs`; (2) Playwright's default `testMatch` would have tried to run that node:test file, so `testMatch` is now explicitly `**/*.spec.ts`; (3) `z-1050`/`z-1049` are not reliably valid Tailwind utilities and are now `z-[1050]`/`z-[1049]`; (4) the star SVG path was duplicated verbatim between `Star.astro` and `PortfolioModal.tsx` and is now the shared `STAR_PATH` constant.
 
 **Known follow-up.** Task 6's hero uses `max-w-[33%]` to approximate the original's `col-sm-4` intro paragraph width. This is the layout detail most likely to need adjustment during the owner's visual comparison, along with the About section's offset columns in Task 10.
