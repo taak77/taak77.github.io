@@ -321,7 +321,8 @@ git commit -m "test: freeze legacy baseline fixture and add comparison harness"
 
 **Files:**
 - Move: `img/` → `public/img/`, `docs/Takashi Aoki.docx` → `public/docs/Takashi Aoki.docx`, `robots.txt` → `public/robots.txt`
-- Delete: `index.html`, `css/`, `js/`, `less/`, `fonts/`, `mail/`, `font-awesome-4.1.0/`, `.idea/`, `taak77.github.io.iml`, all `.DS_Store`
+- Delete (tracked): `index.html`, `css/`, `js/`, `less/`, `fonts/`, `mail/`, `font-awesome-4.1.0/`
+- Delete if present (never tracked; local-only in some checkouts): `.idea/`, `taak77.github.io.iml`, `.DS_Store` files
 
 **Interfaces:**
 - Consumes: nothing.
@@ -342,10 +343,12 @@ Expected: `42` files. `docs/superpowers/` stays at the repo root and is **not** 
 - [ ] **Step 2: Delete the legacy implementation**
 
 ```bash
-git rm -r --quiet css js less fonts mail font-awesome-4.1.0 index.html taak77.github.io.iml
-git rm -r --quiet --ignore-unmatch .idea
+git rm -r --quiet css js less fonts mail font-awesome-4.1.0 index.html
+# Never tracked in this repository — present only in some local checkouts,
+# so --ignore-unmatch keeps this a no-op rather than an error.
+git rm -r --quiet --ignore-unmatch .idea taak77.github.io.iml
+git rm --quiet --cached -r --ignore-unmatch '*.DS_Store'
 find . -name .DS_Store -not -path './node_modules/*' -not -path './.worktrees/*' -delete
-git rm --quiet --cached --ignore-unmatch .DS_Store docs/.DS_Store public/img/.DS_Store public/img/portfolio/.DS_Store
 git status --short
 ```
 

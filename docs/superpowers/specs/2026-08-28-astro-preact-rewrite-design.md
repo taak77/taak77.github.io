@@ -142,11 +142,16 @@ Font Awesome 4.1 is deleted entirely — the whole `font-awesome-4.1.0/` tree
 `star` as the CSS `content` glyph in the dividers. These become inline SVGs.
 Glyphicons are dropped; the page never visibly uses them.
 
-Deleted: `js/jquery-1.11.0.js`, `js/bootstrap*.js`, `js/classie.js`,
-`js/cbpAnimatedHeader*.js`, `js/jqBootstrapValidation.js`, `js/contact_me.js`,
-`js/freelancer.js`, `css/bootstrap*.css`, `css/freelancer.css`, `less/`,
-`fonts/`, `mail/`, `.idea/`, `taak77.github.io.iml`, and all `.DS_Store` files.
-A real `.gitignore` replaces the empty one.
+Deleted from version control: `js/jquery-1.11.0.js`, `js/bootstrap*.js`,
+`js/classie.js`, `js/cbpAnimatedHeader*.js`, `js/jqBootstrapValidation.js`,
+`js/contact_me.js`, `js/freelancer.js`, `css/bootstrap*.css`,
+`css/freelancer.css`, `less/`, `fonts/`, and `mail/`. A real `.gitignore`
+replaces the empty one.
+
+`.idea/`, `taak77.github.io.iml`, and `.DS_Store` files turned out never to have
+been tracked — the repository holds 110 files at `ebda34b` and none of them are
+IDE or OS cruft. They exist only in some local checkouts. The new `.gitignore`
+covers them so they stay out.
 
 For scale, measured on disk: the current page loads 167KB of uncompressed
 JavaScript (jQuery 1.11 unminified is 96KB of that) — 38KB of which is dead —
