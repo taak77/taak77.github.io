@@ -248,9 +248,8 @@ Expected: `798` lines. This file is a frozen fixture — never edit it.
 - [ ] **Step 2: Create a legacy worktree so the original site stays servable with all assets**
 
 ```bash
-git -C /Users/taak77/dev/taak77.github.io worktree add \
-  /Users/taak77/dev/taak77.github.io/.worktrees/legacy-baseline legacy-baseline --detach
-ls /Users/taak77/dev/taak77.github.io/.worktrees/legacy-baseline/index.html
+git worktree add /workspace/.worktrees/legacy-baseline legacy-baseline --detach
+ls /workspace/.worktrees/legacy-baseline/index.html
 ```
 
 Expected: the path exists. This is the "old site" for visual comparison.
@@ -264,7 +263,7 @@ Uses Python's stdlib server so the harness adds no npm dependency.
 # Serves the frozen legacy site and the new build side by side for visual comparison.
 set -euo pipefail
 
-LEGACY_DIR="$(git rev-parse --show-toplevel)/../legacy-baseline"
+LEGACY_DIR="$(git rev-parse --show-toplevel)/.worktrees/legacy-baseline"
 
 if [ ! -d "$LEGACY_DIR" ]; then
   echo "Legacy worktree missing. Create it with:" >&2
