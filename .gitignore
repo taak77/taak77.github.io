@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.worktrees/
+.superpowers/
+test-results/
+playwright-report/
+.DS_Store
+*.iml
+.idea/
