@@ -78,8 +78,9 @@ Every task's requirements implicitly include this section.
 - [ ] **Step 1: Tag the pre-rewrite commit so the comparison target can never drift**
 
 ```bash
-cd /Users/taak77/dev/taak77.github.io/.worktrees/astro-rewrite
+# from the repository root, on branch feat/astro-rewrite
 git tag legacy-baseline ebda34b
+git push origin refs/tags/legacy-baseline
 git tag -l legacy-baseline
 ```
 
@@ -239,11 +240,11 @@ git commit -m "chore: scaffold Astro 7 + Preact + Tailwind toolchain"
 
 ```bash
 mkdir -p tests/fixtures
-git show legacy-baseline:index.html > tests/fixtures/legacy-index.html
-wc -l tests/fixtures/legacy-index.html
+git show legacy-baseline:index.html | cmp - tests/fixtures/legacy-index.html && echo IDENTICAL
+git hash-object tests/fixtures/legacy-index.html
 ```
 
-Expected: `798` lines. This file is a frozen fixture — never edit it.
+Expected: `IDENTICAL`, and blob hash `1f5727d03c3c887860b6cef7712bc9c501fd2232` matching `git rev-parse legacy-baseline:index.html`. Byte identity is the binding check, not a line count (`wc -l` reports 797, since it counts newlines). This file is a frozen fixture — never edit it.
 
 - [ ] **Step 2: Create a legacy worktree so the original site stays servable with all assets**
 
