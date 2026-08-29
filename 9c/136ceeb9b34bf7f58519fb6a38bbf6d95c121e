@@ -1,0 +1,31 @@
+package.json
+  s_914764550e535b::t_b57c2e7748d46b 1-27
+.nvmrc
+  s_914764550e535b::t_a031732c495f0e 1
+.gitignore
+  s_914764550e535b::t_bd4077d1ab7068 1-10
+astro.config.mjs
+  s_914764550e535b::t_39ea215873ac67 1-12
+tsconfig.json
+  s_914764550e535b::t_205eb0e350393e 1-9
+src/pages/index.astro
+  s_914764550e535b::t_b33383bd7f2f40 1-12
+package-lock.json
+  s_914764550e535b::t_abf9850e5520bc 1-5600
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "9c136ceeb9b34bf7f58519fb6a38bbf6d95c121e",
+  "prompts": {},
+  "sessions": {
+    "s_914764550e535b": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "c9304321-3a2c-46db-9b72-c430b4c73290",
+        "model": "claude-opus-5-thinking-high"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
