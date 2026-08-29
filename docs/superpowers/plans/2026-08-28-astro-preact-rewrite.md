@@ -293,7 +293,7 @@ echo ""
 npm run preview -- --port 4321
 ```
 
-`exec` replaces the subshell with `python3` so `$!` is the server's own PID and the `EXIT` trap really kills it. Dropping `2>&1` keeps startup errors visible while `>/dev/null` still suppresses access logs, and the `kill -0` probe fails fast instead of advertising a server that is already dead.
+`exec` replaces the subshell with `python3` so `$!` is the server's own PID and the `EXIT` trap really kills it. Dropping `2>&1` keeps a failed bind visible; note that `http.server` logs requests to stderr too, so request lines now appear in the harness output — that is the deliberate cost of a loud bind failure. The `kill -0` probe then fails fast instead of advertising a server that is already dead.
 
 - [ ] **Step 4: Make it executable and verify both servers respond**
 
