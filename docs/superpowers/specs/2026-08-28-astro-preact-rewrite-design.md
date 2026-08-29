@@ -18,12 +18,16 @@ Two motivations drive the stack choice, both stated by the owner:
 
 ## Workflow
 
-All rewrite work happens on `feat/astro-rewrite`, checked out as a git worktree
-at `.worktrees/astro-rewrite`. `main` stays untouched until the work is reviewed
-and merged, so the live site keeps serving the current `index.html` throughout.
+All rewrite work happens on `feat/astro-rewrite`, which is pushed to `origin`.
+`main` stays untouched until the work is reviewed and merged, so the live site
+keeps serving the current `index.html` throughout.
 
-The new `.gitignore` must include `.worktrees/`. It is currently ignored only
-locally via `.git/info/exclude`, which does not travel with the repository.
+The branch must be pushed as it progresses, not held locally. Work was once lost
+to a local-only branch when the session moved between machines; the branch is now
+the durable record.
+
+`.gitignore` includes `.worktrees/` (the branch may be checked out as a worktree
+on some machines) and `.superpowers/` (agent scratch space).
 
 ## Non-goals
 
@@ -80,14 +84,18 @@ that was removed from the HTML. PHP cannot execute on GitHub Pages regardless.
 | Fonts | `@fontsource/montserrat`, `@fontsource/lato` | 5.3.0 |
 | Tests | `@playwright/test` | 1.62.1 |
 | Language | TypeScript, `strict` | — |
-| Runtime | Node 22 (Astro 7 requires `>=22.12.0`) | 22.17.0 |
+| Runtime | Node 22 (Astro 7 requires `>=22.12.0`) | `.nvmrc`: `22` |
 
 `@astrojs/tailwind` is **not** used; it exists only for legacy Tailwind 3.
 Tailwind 4 integrates as a Vite plugin via `npx astro add tailwind`.
 
-A `.nvmrc` pins Node 22. This matters locally: `/usr/local/bin/node` is a stale
-v8.11.3 shim that shadows nvm's v22.17.0 on `PATH`, and Astro 7 will refuse to
-run under it.
+A `.nvmrc` pins Node to major version `22`, satisfying Astro's floor without
+tying the repo to a patch version that varies between machines and CI.
+
+Two environment notes. On macOS with nvm, a stale `/usr/local/bin/node` v8.11.3
+shim can shadow nvm on `PATH`, and Astro 7 refuses to run under it. And `npm ci`
+warns `EBADENGINE` because the transitive dependency `undici@8.10.0` wants
+`>=22.19.0`; it is a warning only, and the build succeeds.
 
 ### Why Tailwind rather than hand-written CSS
 
@@ -415,5 +423,5 @@ automated pixel-diff is built. Two things support that:
   regressions and deserve the closest look during review.
 - **Pages source flip.** Forgetting it means a green CI run and an unchanged
   live site.
-- **Node shadowing.** The stale `/usr/local/bin/node` v8.11.3 will break local
-  builds until `.nvmrc` is respected in the shell.
+- **Node shadowing.** On macOS, the stale `/usr/local/bin/node` v8.11.3 will
+  break local builds until `.nvmrc` is respected in the shell.

@@ -6,7 +6,7 @@
 
 **Architecture:** A single static Astro page. All content lives in a Zod-validated content collection of 15 markdown files, replacing ~470 lines of copy-pasted modal HTML. The portfolio grid renders as static HTML; only two Preact islands ship JavaScript — a native `<dialog>` modal and the navbar. Styling is Tailwind 4 with Bootstrap 3's breakpoints and the Bootswatch Flatly palette declared as `@theme` tokens.
 
-**Tech Stack:** Astro 7.2.9 (`output: 'static'`), Preact 10.29.8 via `@astrojs/preact` 6.0.4, Tailwind 4.3.3 via `@tailwindcss/vite`, `@fontsource/montserrat` + `@fontsource/lato` 5.3.0, Playwright 1.62.1, TypeScript strict, Node 22.17.0.
+**Tech Stack:** Astro 7.2.9 (`output: 'static'`), Preact 10.29.8 via `@astrojs/preact` 6.0.4, Tailwind 4.3.3 via `@tailwindcss/vite`, `@fontsource/montserrat` + `@fontsource/lato` 5.3.0, Playwright 1.62.1, TypeScript strict, Node 22 (`>=22.12.0`).
 
 **Spec:** `docs/superpowers/specs/2026-08-28-astro-preact-rewrite-design.md`
 
@@ -15,7 +15,8 @@
 Every task's requirements implicitly include this section.
 
 - Work on branch `feat/astro-rewrite` in the worktree at `.worktrees/astro-rewrite`. Never commit to `main`.
-- Node `>=22.12.0` is required by Astro 7. `/usr/local/bin/node` is a stale v8.11.3 shim that shadows nvm on `PATH`; every shell must run `export PATH="$HOME/.nvm/versions/node/v22.17.0/bin:$PATH"` first, or the build fails with a cryptic syntax error.
+- Node `>=22.12.0` is required by Astro 7; `.nvmrc` contains `22`. Verify with `node -v` before building. `npm ci` emits an `EBADENGINE` warning because the transitive dependency `undici@8.10.0` wants `>=22.19.0`; this is a warning only and the build succeeds — do not "fix" it by changing dependency versions.
+  - On macOS with nvm, a stale `/usr/local/bin/node` v8.11.3 shim may shadow nvm on `PATH`. If `node -v` reports v8, prepend the nvm bin directory to `PATH` before continuing.
 - Do **not** install `@astrojs/tailwind`. It exists only for legacy Tailwind 3. Tailwind 4 is a Vite plugin.
 - Bootstrap 3 breakpoints are mandatory for layout fidelity: `768px`, `992px`, `1200px`. Container widths: `750px`, `970px`, `1170px`, with `15px` horizontal padding.
 - Palette, verbatim: `--color-brand-primary: #2c3e50`, `--color-brand-success: #18bc9c`, navbar active `#1a242f`, `btn-default` background `#95a5a6`, body text `#2c3e50`, portfolio hover caption `rgba(24, 188, 156, 0.9)`.
@@ -89,17 +90,18 @@ Expected output: `legacy-baseline`
 Create `.nvmrc`:
 
 ```
-22.17.0
+22
 ```
+
+A major-only pin satisfies Astro's `>=22.12.0` floor without tying the repo to a patch version that differs between machines and CI.
 
 Run:
 
 ```bash
-export PATH="$HOME/.nvm/versions/node/v22.17.0/bin:$PATH"
 node -v && npm -v
 ```
 
-Expected: `v22.17.0` and `10.9.2`. If you see `v8.11.3`, the stale `/usr/local/bin/node` shim is still winning — fix `PATH` before continuing.
+Expected: any `v22.12.0` or newer. On macOS with nvm, if you see `v8.11.3`, the stale `/usr/local/bin/node` shim is shadowing nvm — prepend the nvm bin directory to `PATH` before continuing.
 
 - [ ] **Step 3: Create `package.json`**
 
@@ -416,7 +418,7 @@ git commit -m "refactor: move assets to public/ and delete Bootstrap 3 implement
 
 - [ ] **Step 1: Write the failing test**
 
-Create `tests/content-files.check.mjs`. This is plain ESM, **not** TypeScript: Node 22.17.0 cannot execute a `.ts` test file without `--experimental-strip-types`, and the `.check.mjs` suffix also keeps it outside Playwright's `testMatch`.
+Create `tests/content-files.check.mjs`. This is plain ESM, **not** TypeScript: Node 22 before 22.18 cannot execute a `.ts` test file without `--experimental-strip-types`, and the `.check.mjs` suffix also keeps it outside Playwright's `testMatch`.
 
 ```js
 import { test } from 'node:test';
