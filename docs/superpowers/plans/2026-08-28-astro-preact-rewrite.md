@@ -249,11 +249,12 @@ Expected: `IDENTICAL`, and blob hash `1f5727d03c3c887860b6cef7712bc9c501fd2232` 
 - [ ] **Step 2: Create a legacy worktree so the original site stays servable with all assets**
 
 ```bash
-git worktree add /workspace/.worktrees/legacy-baseline legacy-baseline --detach
-ls /workspace/.worktrees/legacy-baseline/index.html
+# from the repository root
+git worktree add .worktrees/legacy-baseline legacy-baseline --detach
+ls .worktrees/legacy-baseline/index.html
 ```
 
-Expected: the path exists. This is the "old site" for visual comparison.
+Expected: the path exists. The worktree must sit at `.worktrees/legacy-baseline` relative to the repo root, which is the path `compare.sh` computes. This is the "old site" for visual comparison.
 
 - [ ] **Step 3: Create `scripts/compare.sh`**
 
@@ -266,25 +267,33 @@ set -euo pipefail
 
 LEGACY_DIR="$(git rev-parse --show-toplevel)/.worktrees/legacy-baseline"
 
-if [ ! -d "$LEGACY_DIR" ]; then
-  echo "Legacy worktree missing. Create it with:" >&2
-  echo "  git worktree add .worktrees/legacy-baseline legacy-baseline --detach" >&2
+if [ ! -f "$LEGACY_DIR/index.html" ]; then
+  echo "Legacy worktree missing or incomplete. Create it with:" >&2
+  echo "  git worktree add \"$LEGACY_DIR\" legacy-baseline --detach" >&2
   exit 1
 fi
 
 npm run build
 
-(cd "$LEGACY_DIR" && python3 -m http.server 8081 >/dev/null 2>&1) &
+(cd "$LEGACY_DIR" && exec python3 -m http.server 8081 >/dev/null) &
 LEGACY_PID=$!
 trap 'kill "$LEGACY_PID" 2>/dev/null || true' EXIT
+
+sleep 1
+kill -0 "$LEGACY_PID" 2>/dev/null || {
+  echo "Legacy server failed to start on 8081 (port already in use?)" >&2
+  exit 1
+}
 
 echo ""
 echo "  OLD: http://localhost:8081"
 echo "  NEW: http://localhost:4321"
 echo ""
 
-npx astro preview --port 4321
+npm run preview -- --port 4321
 ```
+
+`exec` replaces the subshell with `python3` so `$!` is the server's own PID and the `EXIT` trap really kills it. Dropping `2>&1` keeps startup errors visible while `>/dev/null` still suppresses access logs, and the `kill -0` probe fails fast instead of advertising a server that is already dead.
 
 - [ ] **Step 4: Make it executable and verify both servers respond**
 
