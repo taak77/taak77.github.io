@@ -321,6 +321,8 @@ git commit -m "test: freeze legacy baseline fixture and add comparison harness"
 
 **Files:**
 - Move: `img/` → `public/img/`, `docs/Takashi Aoki.docx` → `public/docs/Takashi Aoki.docx`, `robots.txt` → `public/robots.txt`
+- Create: `playwright.config.ts`, `tests/assets.spec.ts`
+- Modify: `package.json` (add `@types/node` as a devDependency)
 - Delete (tracked): `index.html`, `css/`, `js/`, `less/`, `fonts/`, `mail/`, `font-awesome-4.1.0/`
 - Delete if present (never tracked; local-only in some checkouts): `.idea/`, `taak77.github.io.iml`, `.DS_Store` files
 
@@ -352,65 +354,146 @@ find . -name .DS_Store -not -path './node_modules/*' -not -path './.worktrees/*'
 git status --short
 ```
 
-- [ ] **Step 3: Write the failing test — assets must be reachable at their original URLs**
+- [ ] **Step 3: Add `@types/node` so the test suite type-checks**
+
+The asset test reads the filesystem, so it imports node builtins. Without their
+types, `npx tsc --noEmit` fails.
+
+```bash
+npm install -D @types/node@22
+```
+
+This is a dev-only type package: it ships no bytes to the browser and does not
+affect the built site. The project's "avoid new dependencies" rule targets
+runtime dependencies and does not apply here. Do **not** hand-write an ambient
+`.d.ts` shim instead — a previous attempt did, and it duplicated a maintained
+package while covering only that day's imports.
+
+- [ ] **Step 4: Write the failing test — every asset must be reachable at its original URL**
+
+The binding constraint is that *every* existing public URL keeps working, so the
+list is derived from disk rather than hardcoded: a hardcoded subset silently
+stops covering assets as they change.
 
 Create `tests/assets.spec.ts`:
 
 ```ts
 import { test, expect } from '@playwright/test';
+import { readdirSync, statSync } from 'node:fs';
+import { join, relative, sep } from 'node:path';
 
-const REQUIRED_URLS = [
-  '/img/notion.svg',
-  '/img/portfolio/myads.jpg',
-  '/img/portfolio/drivechart.gif',
-  '/img/portfolio/espn-web.webp',
-  '/img/portfolio/axs-seat-map-3d.webp',
-  '/docs/Takashi%20Aoki.docx',
-  '/robots.txt',
+const IMG_ROOT = 'public/img';
+
+/** Every file under public/img, paired with the URL Astro serves it at. */
+function imageAssets(): { url: string; file: string }[] {
+  return readdirSync(IMG_ROOT, { recursive: true, withFileTypes: true })
+    .filter((entry) => entry.isFile())
+    .map((entry) => {
+      const file = join(entry.parentPath, entry.name);
+      return { url: `/img/${relative(IMG_ROOT, file).split(sep).join('/')}`, file };
+    });
+}
+
+const ASSETS = [
+  ...imageAssets(),
+  { url: '/docs/Takashi%20Aoki.docx', file: 'public/docs/Takashi Aoki.docx' },
+  { url: '/robots.txt', file: 'public/robots.txt' },
 ];
 
-for (const url of REQUIRED_URLS) {
-  test(`${url} is served`, async ({ request }) => {
+test(`all ${ASSETS.length} public assets are served at their original URLs`, async ({
+  request,
+}) => {
+  const failures: string[] = [];
+
+  for (const { url, file } of ASSETS) {
     const response = await request.get(url);
-    expect(response.status()).toBe(200);
-  });
-}
+    if (response.status() !== 200) {
+      failures.push(`${url}: HTTP ${response.status()}`);
+      continue;
+    }
+
+    // A 200 alone would also pass for a truncated or re-encoded file, and
+    // "byte-for-byte" is a hard constraint for this task.
+    const served = (await response.body()).length;
+    const onDisk = statSync(file).size;
+    if (served !== onDisk) {
+      failures.push(`${url}: served ${served} bytes, ${onDisk} bytes on disk`);
+    }
+  }
+
+  expect(failures).toEqual([]);
+});
 ```
 
-- [ ] **Step 4: Create `playwright.config.ts`**
+Putting the count in the test title (`all 54 public assets…`) makes silent
+shrinkage of the derived list visible in the run output.
+
+- [ ] **Step 5: Create `playwright.config.ts`**
+
+Every task from here to Task 11 verifies itself through this config, so its two
+safety properties matter more than they look.
 
 ```ts
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  // Explicit: the default testMatch also grabs *.test.* and *.mjs, which would
-  // make Playwright try to run the node:test content check.
+  // Playwright specs are *.spec.ts by convention here; tests/ also holds a
+  // node:test file (*.check.mjs) and fixtures that Playwright must not execute.
+  // The flip side: a spec accidentally named *.test.ts is silently skipped.
   testMatch: '**/*.spec.ts',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
   reporter: 'list',
   use: {
-    baseURL: 'http://localhost:4321',
-    trace: 'on-first-retry',
+    baseURL: 'http://localhost:4322',
+    trace: 'retain-on-failure',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  // Port 4322 keeps the test server clear of 4321, which `astro dev` and
+  // scripts/compare.sh both use. With reuseExistingServer: false, an occupied
+  // port fails loudly instead of silently handing the suite to a server that
+  // was never built from this tree.
   webServer: {
-    command: 'npm run build && npx astro preview --port 4321',
-    url: 'http://localhost:4321',
-    reuseExistingServer: !process.env.CI,
+    command: 'npm run build && npm run preview -- --port 4322',
+    url: 'http://localhost:4322',
+    reuseExistingServer: false,
     timeout: 120_000,
   },
 });
 ```
 
-- [ ] **Step 5: Run the test and confirm it passes**
+**Do not change `reuseExistingServer` to `!process.env.CI`, and do not move the
+test server back to 4321.** That combination was tried and is actively
+dangerous: this repository has no CI until Task 12, so `process.env.CI` is unset
+for every run during Tasks 3-11, meaning the reuse branch is the *only* branch
+that executes. With `astro dev` listening on 4321, the suite was observed
+passing 7/7 with no `dist/` directory at all — green tests, no build.
 
-Run: `npx playwright test tests/assets.spec.ts`
-Expected: 7 passed. A failure here means an asset path changed — fix the move, not the test.
+- [ ] **Step 6: Run the tests and confirm they pass**
 
-- [ ] **Step 6: Commit**
+```bash
+npx tsc --noEmit
+npx playwright test
+```
+
+Expected: `tsc` exits 0, and one asset test passes covering **54** URLs (52 files
+under `public/img`, plus the `.docx` and `robots.txt`). A failure means an asset
+genuinely moved or changed size — fix the move, never the test.
+
+Then prove the config's guarantee holds, because a green suite is worthless if it
+did not build:
+
+```bash
+rm -rf dist
+npx playwright test
+ls dist/index.html
+```
+
+Expected: the suite passes AND `dist/index.html` exists afterwards.
+
+- [ ] **Step 7: Commit**
 
 ```bash
 git add -A
