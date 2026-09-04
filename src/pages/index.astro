@@ -1,10 +1,23 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import PortfolioGrid from '../components/PortfolioGrid.astro';
+import PortfolioModal from '../components/PortfolioModal.tsx';
+
+const entries = (await getCollection('portfolio')).sort((a, b) => a.data.order - b.data.order);
+
+const modalItems = entries.map((entry) => ({
+  title: entry.data.title,
+  images: entry.data.images,
+  imageColumns: entry.data.imageColumns,
+  tools: entry.data.tools,
+  description: entry.body!.trim(),
+}));
 ---
 
 <BaseLayout title="Portfolio - Takashi Aoki">
   <Hero />
   <PortfolioGrid />
+  <PortfolioModal items={modalItems} client:load />
 </BaseLayout>
