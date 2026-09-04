@@ -1,0 +1,22 @@
+playwright.config.ts
+  s_008418bbe12d27::t_5ba140ecf0905e 14,23-24
+tests/styles.spec.ts
+  s_008418bbe12d27::t_584d2add1695b8 20-21
+  s_008418bbe12d27::t_7e937833ccd5ab 38-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "a5ebe6f7f87aa44e8da12ae1107ed8454021336e",
+  "prompts": {},
+  "sessions": {
+    "s_008418bbe12d27": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "c5a19351-830c-41c2-a87a-3a3daf40f8a9",
+        "model": "composer-2.5-fast"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
