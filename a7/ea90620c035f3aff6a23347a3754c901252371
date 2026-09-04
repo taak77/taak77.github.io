@@ -1,0 +1,27 @@
+src/components/Footer.astro
+  s_cae93605e96d6a::t_e3fea68d43e73a 1-30
+src/components/About.astro
+  s_cae93605e96d6a::t_17fe63c9e39643 1-30
+src/pages/index.astro
+  s_cae93605e96d6a::t_c870529ae30dc6 4,8-10,27-29
+src/components/ScrollTop.astro
+  s_cae93605e96d6a::t_9e3a5262e8394b 1-13
+tests/sections.spec.ts
+  s_cae93605e96d6a::t_c3c45db245f127 1-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "a7ea90620c035f3aff6a23347a3754c901252371",
+  "prompts": {},
+  "sessions": {
+    "s_cae93605e96d6a": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "4ea21340-6086-4e4b-b110-37e7318d448c",
+        "model": "composer-2.5-fast"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
