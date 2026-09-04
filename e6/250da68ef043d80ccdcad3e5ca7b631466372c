@@ -1,0 +1,52 @@
+src/content/portfolio/watch-espn.md
+  s_2bd6dd5ea5a4f4::t_eea636f0942feb 1-12
+src/content.config.ts
+  s_2bd6dd5ea5a4f4::t_d46583f184e477 1-16
+src/content/portfolio/hyper-targeting-confusion-matrix.md
+  s_2bd6dd5ea5a4f4::t_1bd939e689101c 1-11
+src/content/portfolio/stats-lab.md
+  s_2bd6dd5ea5a4f4::t_e56574719d0187 1-18
+tests/content-files.check.mjs
+  s_2bd6dd5ea5a4f4::t_af3b8acebd33c0 1-37
+src/content/portfolio/nfl-schedules-page.md
+  s_2bd6dd5ea5a4f4::t_4ca34dcf45baba 1-13
+src/content/portfolio/playstation-4.md
+  s_2bd6dd5ea5a4f4::t_2cda4ff6ec9025 1-13
+src/content/portfolio/espn-plus.md
+  s_2bd6dd5ea5a4f4::t_942d786fb28d21 1-15
+src/content/portfolio/fantasy-live-console.md
+  s_2bd6dd5ea5a4f4::t_2f4702e86af8d9 1-16
+src/content/portfolio/data-viz-prototypes.md
+  s_2bd6dd5ea5a4f4::t_55ae0fbdfe0189 1-14
+src/content/portfolio/myads.md
+  s_2bd6dd5ea5a4f4::t_c345644c8cbec2 1-12
+src/content/portfolio/appletv.md
+  s_2bd6dd5ea5a4f4::t_e818f571748510 1-16
+src/content/portfolio/nfl-gamecenter.md
+  s_2bd6dd5ea5a4f4::t_c54f00bf63e49a 1-13
+src/content/portfolio/shopify.md
+  s_2bd6dd5ea5a4f4::t_611cbed60ff8b3 1-16
+src/content/portfolio/ticket-search.md
+  s_2bd6dd5ea5a4f4::t_fc8e549839422a 1-19
+src/content/portfolio/android-app.md
+  s_2bd6dd5ea5a4f4::t_313035f1e8f26c 3-4,6-8,10-12,15
+  s_2bd6dd5ea5a4f4::t_a25179198108d7 1-2,5,9,13-14
+src/content/portfolio/superbowl-live.md
+  s_2bd6dd5ea5a4f4::t_ad5df0c1699b73 1-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "e6250da68ef043d80ccdcad3e5ca7b631466372c",
+  "prompts": {},
+  "sessions": {
+    "s_2bd6dd5ea5a4f4": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "77786f13-103f-4ec8-bf7d-a38d392b099d",
+        "model": "composer-2.5-fast"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
