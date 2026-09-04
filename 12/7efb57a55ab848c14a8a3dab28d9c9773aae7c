@@ -1,0 +1,21 @@
+src/components/PortfolioModal.tsx
+  s_c8dd194f76aa58::t_a7d57be5885bab 1,35
+tests/parity.spec.ts
+  s_c8dd194f76aa58::t_8dda15a9e65c14 1-110
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "127efb57a55ab848c14a8a3dab28d9c9773aae7c",
+  "prompts": {},
+  "sessions": {
+    "s_c8dd194f76aa58": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "a0b83ef3-91ed-4e0c-9750-8c759b748a9f",
+        "model": "gpt-5.6-sol-medium"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
