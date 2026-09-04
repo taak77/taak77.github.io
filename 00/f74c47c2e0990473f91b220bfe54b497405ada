@@ -1,0 +1,35 @@
+tests/styles.spec.ts
+  s_b48669059b16f4::t_3f9e6671069565 1-38
+scripts/preview-https.mjs
+  s_b48669059b16f4::t_9b0b8eb1fa920a 5,12-18
+  s_b48669059b16f4::t_facbf76b77cae6 1-4,6-11,19-53
+playwright.config.ts
+  s_b48669059b16f4::t_22196975604dde 14-15
+  s_b48669059b16f4::t_c2d86668823925 24-26
+.gitignore
+  s_b48669059b16f4::t_85638d02438be7 8
+src/pages/index.astro
+  s_b48669059b16f4::t_14ff0d6edd5f55 2,11
+src/styles/global.css
+  s_b48669059b16f4::t_985c358960a3b3 1-26,34-37,39-118
+  s_b48669059b16f4::t_8eb249cff6deaa 29,31
+  s_b48669059b16f4::t_05dc69e282bd22 27,30,32-33
+  s_b48669059b16f4::t_3596a5d6a47a33 28
+  s_b48669059b16f4::t_9f1ccebd7eb583 38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "00f74c47c2e0990473f91b220bfe54b497405ada",
+  "prompts": {},
+  "sessions": {
+    "s_b48669059b16f4": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "ea2223cb-2824-4e92-8e9b-3d24f8e25dbc",
+        "model": "composer-2.5-fast"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
