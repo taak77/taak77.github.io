@@ -40,6 +40,9 @@ test('the rewrite reproduces all 15 projects exactly', async ({ page }) => {
   await page.goto('/');
   const tiles = page.locator('[data-portfolio-tile]');
   await expect(tiles).toHaveCount(15);
+  await expect(
+    page.locator('astro-island').filter({ has: page.locator('dialog[data-portfolio-dialog]') }),
+  ).not.toHaveAttribute('ssr', '');
 
   // Thumbnails, in order, without opening anything.
   const thumbnails = await tiles.locator('img').evaluateAll((imgs) =>
@@ -78,6 +81,9 @@ test('every image referenced anywhere resolves', async ({ page, request }) => {
   const paths = new Set<string>();
 
   const tiles = page.locator('[data-portfolio-tile]');
+  await expect(
+    page.locator('astro-island').filter({ has: page.locator('dialog[data-portfolio-dialog]') }),
+  ).not.toHaveAttribute('ssr', '');
   for (let index = 0; index < 15; index++) {
     await tiles.nth(index).click();
     const dialog = page.locator('dialog[data-portfolio-dialog]');

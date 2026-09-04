@@ -26,6 +26,7 @@ test('mobile menu toggles and auto-closes on link click', async ({ page }) => {
 
   const menu = page.locator('[data-nav-menu]');
   const toggle = page.locator('[data-nav-toggle]');
+  await expect(page.locator('astro-island').filter({ has: toggle })).not.toHaveAttribute('ssr', '');
   await expect(menu).toBeHidden();
 
   await toggle.click();
