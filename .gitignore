@@ -8,3 +8,6 @@ playwright-report/
 .DS_Store
 *.iml
 .idea/
+# Global gitignore `Icon?` (macOS Icon\r) matches paths under `icons/` case-insensitively
+!src/components/icons/
+!src/components/icons/**
