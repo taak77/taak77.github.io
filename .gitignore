@@ -5,6 +5,7 @@ dist/
 .superpowers/
 test-results/
 playwright-report/
+scripts/preview-*.pem
 .DS_Store
 *.iml
 .idea/
