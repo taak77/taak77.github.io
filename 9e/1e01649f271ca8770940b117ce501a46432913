@@ -1,0 +1,23 @@
+src/components/PortfolioGrid.astro
+  s_138442b44d7189::t_4ce740b06cb1e1 1-39
+src/pages/index.astro
+  s_138442b44d7189::t_a5515a87b52e36 4,9
+tests/grid.spec.ts
+  s_138442b44d7189::t_a3e42ef448db87 1-46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "9e1e01649f271ca8770940b117ce501a46432913",
+  "prompts": {},
+  "sessions": {
+    "s_138442b44d7189": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "41dc65d4-d1f4-4ace-b2d7-05e2be8aad5a",
+        "model": "composer-2.5-fast"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
