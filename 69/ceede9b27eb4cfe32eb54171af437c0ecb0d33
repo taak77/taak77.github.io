@@ -1,0 +1,28 @@
+tests/hero.spec.ts
+  s_c7c33dc62a0a00::t_80f9f726cf3427 1-12,14-28
+  s_c7c33dc62a0a00::t_dcc3baaa0896f7 13
+src/layouts/BaseLayout.astro
+  s_c7c33dc62a0a00::t_63c9f5feb567bb 1-31
+src/components/StarDivider.astro
+  s_c7c33dc62a0a00::t_405c454d7fe6dd 1-13
+src/components/Hero.astro
+  s_c7c33dc62a0a00::t_5e8a4b5e6968ab 1-23
+src/pages/index.astro
+  s_c7c33dc62a0a00::t_e6751d4696fae8 2-3,5-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "69ceede9b27eb4cfe32eb54171af437c0ecb0d33",
+  "prompts": {},
+  "sessions": {
+    "s_c7c33dc62a0a00": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "93451046-b543-4707-9d5c-6d456f239205",
+        "model": "composer-2.5-fast"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
