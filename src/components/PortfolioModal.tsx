@@ -62,10 +62,6 @@ export default function PortfolioModal({ items }: Props) {
       aria-label={item ? item.title : undefined}
       onCancel={close}
       onClose={close}
-      onClick={(event) => {
-        // A click landing on the dialog itself is a backdrop click.
-        if (event.target === dialogRef.current) close();
-      }}
       class="m-0 h-full max-h-none w-full max-w-none border-0 bg-white p-0 text-brand-primary backdrop:bg-black/50"
     >
       {item && (

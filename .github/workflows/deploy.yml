@@ -31,6 +31,8 @@ jobs:
 
       - run: npm run test:content
 
+      - run: npx tsc --noEmit
+
       - run: npm test
 
       - run: npm run build
