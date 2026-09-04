@@ -1,0 +1,23 @@
+tests/navbar.spec.ts
+  s_9b0339d7524a7f::t_8c5464fe0ba317 29
+tests/parity.spec.ts
+  s_9b0339d7524a7f::t_b6bd9af8e6e767 43-45,84-86
+tests/modal.spec.ts
+  s_9b0339d7524a7f::t_d4d8d085726f94 3,5-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "af2ba2ed2749c6febb881cc5211044b2029b8b4f",
+  "prompts": {},
+  "sessions": {
+    "s_9b0339d7524a7f": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "75a8be6f-d4a3-4383-8200-3710288ad045",
+        "model": "gpt-5.6-sol-medium"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
