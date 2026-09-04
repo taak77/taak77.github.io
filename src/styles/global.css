@@ -24,13 +24,6 @@
   --font-body: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-@property --bootstrap-line-height {
-  /* ponytail: Lightning CSS rounds 1.42857143 → 1.42857; string @property keeps the test substring */
-  syntax: '<string>';
-  inherits: false;
-  initial-value: "1.42857143";
-}
-
 @layer base {
   body {
     font-family: var(--font-body);

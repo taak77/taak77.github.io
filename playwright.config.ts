@@ -11,8 +11,7 @@ export default defineConfig({
   retries: 0,
   reporter: 'list',
   use: {
-    baseURL: 'https://localhost:4322',
-    ignoreHTTPSErrors: true,
+    baseURL: 'http://localhost:4322',
     trace: 'retain-on-failure',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
@@ -21,9 +20,8 @@ export default defineConfig({
   // port fails loudly instead of silently handing the suite to a server that
   // was never built from this tree.
   webServer: {
-    command: 'npm run build && node scripts/preview-https.mjs',
-    url: 'https://localhost:4322',
-    ignoreHTTPSErrors: true,
+    command: 'npm run build && npm run preview -- --port 4322',
+    url: 'http://localhost:4322',
     reuseExistingServer: false,
     timeout: 120_000,
   },

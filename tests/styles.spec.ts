@@ -17,7 +17,8 @@ test('Flatly palette and Bootstrap 3 breakpoints are compiled into the CSS', asy
   expect(css).toContain('768px');
   expect(css).toContain('992px');
   expect(css).toContain('1200px');
-  expect(css).toContain('1.42857143');
+  // Lightning CSS rounds 1.42857143 → 1.42857 in compiled output
+  expect(css).toMatch(/1\.42857/);
 });
 
 test('Montserrat and Lato are self-hosted, with no external font request', async ({ page }) => {
@@ -34,5 +35,8 @@ test('Montserrat and Lato are self-hosted, with no external font request', async
   expect(families).toContain('Lato');
 
   expect(requested.filter((u) => u.includes('fonts.googleapis.com'))).toEqual([]);
-  expect(requested.filter((u) => u.startsWith('http://'))).toEqual([]);
+  const nonLocalHttp = requested.filter(
+    (u) => u.startsWith('http://') && !/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?/.test(u),
+  );
+  expect(nonLocalHttp).toEqual([]);
 });
