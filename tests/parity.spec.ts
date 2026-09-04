@@ -105,6 +105,11 @@ test('the only third-party request is the Gravatar avatar', async ({ page }) => 
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
 
+  const avatarLoaded = await page.locator('header img').evaluate(
+    (image: HTMLImageElement) => image.complete && image.naturalWidth > 0,
+  );
+  expect(avatarLoaded, 'Gravatar avatar loaded').toBe(true);
+
   const unexpected = external.filter((origin) => origin !== 'https://en.gravatar.com');
   expect(unexpected).toEqual([]);
 });

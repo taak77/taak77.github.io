@@ -51,6 +51,17 @@ test('body scroll is locked while open and restored on close', async ({ page }) 
   await page.locator('[data-portfolio-tile]').first().click();
   expect(await page.evaluate(() => document.body.style.overflow)).toBe('hidden');
 
+  await page.evaluate(() => {
+    const dialog = document.querySelector('dialog[data-portfolio-dialog]')!;
+    dialog.addEventListener(
+      'cancel',
+      () => {
+        document.documentElement.dataset.overflowDuringCancel = document.body.style.overflow;
+      },
+      { once: true },
+    );
+  });
   await page.keyboard.press('Escape');
+  expect(await page.locator('html').getAttribute('data-overflow-during-cancel')).toBe('');
   expect(await page.evaluate(() => document.body.style.overflow)).toBe('');
 });

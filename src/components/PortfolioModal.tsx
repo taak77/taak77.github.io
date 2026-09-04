@@ -60,6 +60,7 @@ export default function PortfolioModal({ items }: Props) {
       data-portfolio-dialog
       aria-modal="true"
       aria-label={item ? item.title : undefined}
+      onCancel={close}
       onClose={close}
       onClick={(event) => {
         // A click landing on the dialog itself is a backdrop click.
