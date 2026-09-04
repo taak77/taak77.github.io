@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import PortfolioGrid from '../components/PortfolioGrid.astro';
 import PortfolioModal from '../components/PortfolioModal.tsx';
+import Navbar from '../components/Navbar.tsx';
 
 const entries = (await getCollection('portfolio')).sort((a, b) => a.data.order - b.data.order);
 
@@ -17,6 +18,7 @@ const modalItems = entries.map((entry) => ({
 ---
 
 <BaseLayout title="Portfolio - Takashi Aoki">
+  <Navbar client:idle />
   <Hero />
   <PortfolioGrid />
   <PortfolioModal items={modalItems} client:load />
