@@ -1,0 +1,35 @@
+src/components/icons/star-path.ts
+  s_c7c33dc62a0a00::t_bd24fbd4ba1b15 1-2
+src/components/icons/LinkedIn.astro
+  s_c7c33dc62a0a00::t_e5e22a9b633625 1
+.gitignore
+  s_c7c33dc62a0a00::t_138e1927b030ed 11-13
+src/components/icons/ChevronUp.astro
+  s_c7c33dc62a0a00::t_341e02a1865218 1
+src/components/icons/SearchPlus.astro
+  s_c7c33dc62a0a00::t_62f32fc0bb3208 1
+src/components/icons/Star.astro
+  s_c7c33dc62a0a00::t_e71cb3930a8589 1-5
+src/components/icons/Download.astro
+  s_c7c33dc62a0a00::t_4901ca85d0c6c9 1
+src/components/icons/GitHub.astro
+  s_c7c33dc62a0a00::t_5bc0f2d9f323bb 1
+src/components/icons/Times.astro
+  s_c7c33dc62a0a00::t_a9af87f4dd9ca0 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "e7952a28f2a73c358f1accc618e0cd3980bf995c",
+  "prompts": {},
+  "sessions": {
+    "s_c7c33dc62a0a00": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "93451046-b543-4707-9d5c-6d456f239205",
+        "model": "composer-2.5-fast"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
