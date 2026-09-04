@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { STAR_PATH } from './icons/star-path';
 
 export interface PortfolioModalItem {
@@ -32,7 +32,7 @@ export default function PortfolioModal({ items }: Props) {
     return () => document.removeEventListener('click', onClick);
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
