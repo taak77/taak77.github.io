@@ -1,0 +1,19 @@
+.github/workflows/deploy.yml
+  s_ed09f0923b0f1c::t_84ab4c6088bfc0 1-52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "06dc2c97f4e5df7f748552a65ff43f939d358c81",
+  "prompts": {},
+  "sessions": {
+    "s_ed09f0923b0f1c": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "f0068b97-49b7-48ab-8246-be6fc198206c",
+        "model": "gpt-5.6-sol-medium"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
