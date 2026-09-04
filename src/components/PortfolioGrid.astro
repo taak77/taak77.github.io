@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import StarDivider from './StarDivider.astro';
+import SearchPlus from './icons/SearchPlus.astro';
+
+const items = (await getCollection('portfolio')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="portfolio" class="py-[75px] sm:py-[100px]">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="m-0 text-[3em]">Portfolio</h2>
+      <StarDivider variant="primary" />
+    </div>
+
+    <div class="flex flex-wrap">
+      {
+        items.map((item, index) => (
+          <div class="mb-[15px] w-full px-[15px] sm:mb-[30px] sm:w-1/3">
+            <button
+              type="button"
+              data-portfolio-tile
+              data-portfolio-index={index}
+              aria-label={`View details for ${item.data.title}`}
+              class="group relative mx-auto block w-full max-w-[400px] cursor-pointer border-0 bg-transparent p-0"
+            >
+              <span
+                class="absolute inset-0 z-10 flex items-center justify-center bg-[rgba(24,188,156,0.9)] opacity-0 transition-all duration-500 ease-linear group-hover:opacity-100 group-focus-visible:opacity-100"
+              >
+                <span class="text-[3em] text-white"><SearchPlus /></span>
+              </span>
+              <img src={item.data.thumbnail} alt="" class="block h-auto w-full" />
+            </button>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
