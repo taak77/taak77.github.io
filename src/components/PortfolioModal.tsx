@@ -1,5 +1,4 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
-import { STAR_PATH } from './icons/star-path';
 
 export interface PortfolioModalItem {
   title: string;
@@ -82,13 +81,7 @@ export default function PortfolioModal({ items }: Props) {
               <h2 data-modal-title class="m-0 text-[3em]">
                 {item.title}
               </h2>
-              <div class="star-divider star-divider--primary" role="presentation">
-                <span class="star-divider__icon">
-                  <svg viewBox="0 0 1792 1792" fill="currentColor" aria-hidden="true">
-                    <path d={STAR_PATH} />
-                  </svg>
-                </span>
-              </div>
+              <hr class="star-divider star-divider--primary" />
 
               <div class="flex flex-wrap justify-center">
                 {item.images.map((src) => (

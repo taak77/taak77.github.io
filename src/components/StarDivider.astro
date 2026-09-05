@@ -1,6 +1,4 @@
 ---
-import Star from './icons/Star.astro';
-
 interface Props {
   variant: 'light' | 'primary';
 }
@@ -8,6 +6,4 @@ interface Props {
 const { variant } = Astro.props;
 ---
 
-<div class={`star-divider star-divider--${variant}`} role="presentation">
-  <span class="star-divider__icon"><Star /></span>
-</div>
+<hr class={`star-divider star-divider--${variant}`} />

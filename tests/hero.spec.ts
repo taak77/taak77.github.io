@@ -22,7 +22,9 @@ test('hero renders name, title, intro, and avatar', async ({ page }) => {
   );
 });
 
-test('the hero star divider is present', async ({ page }) => {
+test('the hero divider is present without a star icon', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('header .star-divider--light svg')).toBeVisible();
+  const divider = page.locator('header .star-divider--light');
+  await expect(divider).toBeVisible();
+  await expect(divider.locator('svg')).toHaveCount(0);
 });

@@ -63,52 +63,19 @@
   @media (width >= 1200px) { width: 1170px; }
 }
 
-/*
- * Star divider: a 5px rule with a star glyph masking its centre.
- * Icon is absolutely positioned so the box stays ~5px tall like the legacy
- * `hr.star-*` + Font Awesome ::after (an in-flow icon was adding ~35px).
- */
+/* Plain 5px rule — matches live site (Font Awesome star glyph does not render there) */
 .star-divider {
-  position: relative;
   max-width: 250px;
   margin: 25px auto 30px;
   padding: 0;
   border: none;
   border-top: solid 5px;
-  text-align: center;
-}
-
-.star-divider__icon {
-  position: absolute;
-  left: 50%;
-  top: -0.8em;
-  display: inline-block;
-  transform: translateX(-50%);
-  padding: 0 0.25em;
-  font-size: 2em;
-  line-height: 1;
-}
-
-.star-divider__icon svg {
-  width: 1em;
-  height: 1em;
-  vertical-align: middle;
 }
 
 .star-divider--light {
   border-color: #fff;
 }
 
-.star-divider--light .star-divider__icon {
-  background-color: var(--color-brand-success);
-  color: #fff;
-}
-
 .star-divider--primary {
   border-color: var(--color-brand-primary);
-}
-
-.star-divider--primary .star-divider__icon {
-  background-color: #fff;
-  color: var(--color-brand-primary);
 }
