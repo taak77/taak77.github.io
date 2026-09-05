@@ -27,7 +27,8 @@ const items = (await getCollection('portfolio')).sort((a, b) => a.data.order - b
               <span
                 class="absolute inset-0 z-10 flex items-center justify-center bg-[rgba(24,188,156,0.9)] opacity-0 transition-all duration-500 ease-linear group-hover:opacity-100 group-focus-visible:opacity-100"
               >
-                <span class="text-[3em] text-white"><SearchPlus /></span>
+                {/* fa-3x on the live site — size the SVG via 1em inside 3em font-size */}
+                <span class="text-[3em] leading-none text-white"><SearchPlus /></span>
               </span>
               <img src={item.data.thumbnail} alt="" class="block h-auto w-full" />
             </button>

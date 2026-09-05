@@ -44,3 +44,14 @@ test('tiles are keyboard-reachable buttons with accessible names', async ({ page
     'View details for MyAds',
   );
 });
+
+test('hover caption shows a sized magnifier icon', async ({ page }) => {
+  await page.goto('/');
+  const tile = page.locator('[data-portfolio-tile]').first();
+  await tile.hover();
+  const icon = tile.locator('svg');
+  await expect(icon).toBeVisible();
+  const box = await icon.boundingBox();
+  expect(box?.width ?? 0).toBeGreaterThan(20);
+  expect(box?.height ?? 0).toBeGreaterThan(20);
+});
