@@ -1,0 +1,19 @@
+src/components/icons/SearchPlus.astro
+  s_00515686725ddf::t_86922e454754b5 2,9-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "82b24acdd20bce59fd6a85191355a0ccfad875b9",
+  "prompts": {},
+  "sessions": {
+    "s_00515686725ddf": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "0d402375-839b-4715-822b-6fb1d0f602f9",
+        "model": "default"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
