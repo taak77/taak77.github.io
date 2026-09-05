@@ -1,0 +1,25 @@
+src/components/PortfolioModal.tsx
+  s_00515686725ddf::t_0f90deb663a908 84
+tests/hero.spec.ts
+  s_00515686725ddf::t_5b2ffc3154e0fc 25,27-29
+src/styles/global.css
+  s_00515686725ddf::t_8672592df3ae69 66
+src/components/StarDivider.astro
+  s_00515686725ddf::t_c8adce8b42b155 9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "7f05c4e3542ec2cfe494338947c72b90386ccc18",
+  "prompts": {},
+  "sessions": {
+    "s_00515686725ddf": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "0d402375-839b-4715-822b-6fb1d0f602f9",
+        "model": "default"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
