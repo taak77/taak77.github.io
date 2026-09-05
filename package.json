@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "test": "playwright test",
     "test:content": "node --test tests/content-files.check.mjs",
+    "typecheck": "astro sync && tsc --noEmit",
     "compare": "bash scripts/compare.sh"
   },
   "dependencies": {
