@@ -1,0 +1,23 @@
+---
+import StarDivider from './StarDivider.astro';
+
+const AVATAR =
+  'https://en.gravatar.com/userimage/34773047/5aaac04f99bf0a9a39cd748c6a4023ec.jpg?size=256';
+---
+
+<header class="bg-brand-success text-center text-white">
+  <div class="container pt-[100px] pb-[50px] sm:pt-[200px] sm:pb-[100px]">
+    <img src={AVATAR} alt="" class="mx-auto mb-5 block h-auto max-w-full rounded-full" />
+    <div>
+      <span class="block font-heading text-[2em] font-bold uppercase sm:text-[4.75em]">
+        Takashi Aoki
+      </span>
+      <StarDivider variant="light" />
+      <span class="text-[1.25em] font-light sm:text-[1.75em]">Software Engineer</span>
+      <p class="mx-auto mt-4 max-w-[33%] text-[15px] max-sm:max-w-full">
+        An accomplished detail-oriented application developer with 20+ years of professional
+        experience in software engineering.
+      </p>
+    </div>
+  </div>
+</header>

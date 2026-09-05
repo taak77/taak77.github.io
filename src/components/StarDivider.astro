@@ -1,0 +1,9 @@
+---
+interface Props {
+  variant: 'light' | 'primary';
+}
+
+const { variant } = Astro.props;
+---
+
+<hr class={`star-divider star-divider--${variant}`} />

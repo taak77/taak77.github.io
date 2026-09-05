@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.worktrees/
+.superpowers/
+test-results/
+playwright-report/
+graphify-out/
+.DS_Store
+*.iml
+.idea/
+# Global gitignore `Icon?` (macOS Icon\r) matches paths under `icons/` case-insensitively
+!src/components/icons/
+!src/components/icons/**

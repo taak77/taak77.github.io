@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+
+/* Self-hosted — replaces the blocked http:// Google Fonts requests */
+@import '@fontsource/montserrat/400.css';
+@import '@fontsource/montserrat/700.css';
+@import '@fontsource/lato/400.css';
+@import '@fontsource/lato/400-italic.css';
+@import '@fontsource/lato/700.css';
+@import '@fontsource/lato/700-italic.css';
+
+@theme {
+  /* Bootstrap 3 breakpoints — required for layout fidelity */
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 992px;
+  --breakpoint-lg: 1200px;
+
+  /* Bootswatch Flatly */
+  --color-brand-primary: #2c3e50;
+  --color-brand-success: #18bc9c;
+  --color-navbar-active: #1a242f;
+  --color-btn-default: #95a5a6;
+
+  --font-heading: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-body: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.42857143;
+    color: var(--color-brand-primary);
+    background-color: #fff;
+    overflow-x: hidden;
+  }
+
+  p {
+    font-size: 20px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  /* Replaces the 1500ms jQuery easing scroll; honors reduced-motion for free */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  :target {
+    scroll-margin-top: 70px;
+  }
+}
+
+/* Bootstrap 3 container widths */
+@utility container {
+  margin-inline: auto;
+  padding-inline: 15px;
+  @media (width >= 768px) { width: 750px; }
+  @media (width >= 992px) { width: 970px; }
+  @media (width >= 1200px) { width: 1170px; }
+}
+
+/* Plain 5px rule — matches live site (Font Awesome star glyph does not render there) */
+.star-divider {
+  max-width: 250px;
+  margin: 25px auto 30px;
+  padding: 0;
+  border: none;
+  border-top: solid 5px;
+}
+
+.star-divider--light {
+  border-color: #fff;
+}
+
+.star-divider--primary {
+  border-color: var(--color-brand-primary);
+}

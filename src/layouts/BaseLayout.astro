@@ -1,0 +1,31 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="icon" href="/img/notion.svg" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>{title}</title>
+  </head>
+  <body id="page-top" class="relative">
+    <div
+      data-nav-sentinel
+      aria-hidden="true"
+      class="pointer-events-none absolute top-[300px] left-0 h-px w-px"
+    >
+    </div>
+    <slot />
+  </body>
+</html>

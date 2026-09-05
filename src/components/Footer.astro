@@ -1,0 +1,33 @@
+---
+import LinkedIn from './icons/LinkedIn.astro';
+import GitHub from './icons/GitHub.astro';
+
+const SOCIAL = [
+  { href: 'https://www.linkedin.com/in/taak77', label: 'LinkedIn', Icon: LinkedIn },
+  { href: 'https://github.com/taak77', label: 'GitHub', Icon: GitHub },
+];
+---
+
+<footer class="bg-brand-primary pt-[50px] pb-[50px] text-center text-white">
+  <div class="container">
+    <h3 class="mb-[30px]">Around the Web</h3>
+    {/* pb on footer (not mb on ul) — child margin collapses through and leaves a white gap below the navy band */}
+    <ul class="flex list-none justify-center gap-[10px] p-0">
+      {
+        SOCIAL.map(({ href, label, Icon }) => (
+          <li>
+            <a
+              href={href}
+              aria-label={label}
+              class="inline-flex h-[50px] w-[50px] items-center justify-center rounded-full border-2 border-white text-[20px] text-white transition-all duration-300 hover:bg-white hover:text-brand-primary"
+            >
+              <span class="inline-flex h-[1em] w-[1.28571429em] items-center justify-center">
+                <Icon />
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>

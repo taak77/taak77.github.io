@@ -1,0 +1,28 @@
+{
+  "name": "taak77-github-io",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "playwright test",
+    "test:content": "node --test tests/content-files.check.mjs",
+    "compare": "bash scripts/compare.sh"
+  },
+  "dependencies": {
+    "@astrojs/preact": "6.0.4",
+    "@fontsource/lato": "5.3.0",
+    "@fontsource/montserrat": "5.3.0",
+    "astro": "7.2.9",
+    "preact": "10.29.8"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "^22.20.1",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.2"
+  }
+}
