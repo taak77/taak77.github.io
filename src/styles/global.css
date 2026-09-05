@@ -65,7 +65,8 @@
 
 /*
  * Star divider: a 5px rule with a star glyph masking its centre.
- * Utilities cannot express the overlapping ::after mask, so it stays as CSS.
+ * Icon is absolutely positioned so the box stays ~5px tall like the legacy
+ * `hr.star-*` + Font Awesome ::after (an in-flow icon was adding ~35px).
  */
 .star-divider {
   position: relative;
@@ -78,9 +79,11 @@
 }
 
 .star-divider__icon {
-  display: inline-block;
-  position: relative;
+  position: absolute;
+  left: 50%;
   top: -0.8em;
+  display: inline-block;
+  transform: translateX(-50%);
   padding: 0 0.25em;
   font-size: 2em;
   line-height: 1;

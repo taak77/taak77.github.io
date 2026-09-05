@@ -8,10 +8,11 @@ const SOCIAL = [
 ];
 ---
 
-<footer class="bg-brand-primary pt-[50px] text-center text-white">
+<footer class="bg-brand-primary pt-[50px] pb-[50px] text-center text-white">
   <div class="container">
     <h3 class="mb-[30px]">Around the Web</h3>
-    <ul class="mb-[50px] flex list-none justify-center gap-[10px] p-0">
+    {/* pb on footer (not mb on ul) — child margin collapses through and leaves a white gap below the navy band */}
+    <ul class="flex list-none justify-center gap-[10px] p-0">
       {
         SOCIAL.map(({ href, label, Icon }) => (
           <li>
