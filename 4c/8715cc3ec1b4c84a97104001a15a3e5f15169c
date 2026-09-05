@@ -1,0 +1,27 @@
+src/components/icons/LinkedIn.astro
+  s_00515686725ddf::t_caea7ea2ab8473 1,3-7,9-14
+  s_00515686725ddf::t_1f998a4ee47f44 2,8
+src/components/icons/GitHub.astro
+  s_00515686725ddf::t_93f6b8c0700a1b 5,10
+  s_00515686725ddf::t_6d332ec2490470 2
+  s_00515686725ddf::t_eed8bf61e73577 1,3-4,7,12-17
+  s_00515686725ddf::t_3cda49e4ff1981 6,8-9,11
+src/components/Footer.astro
+  s_00515686725ddf::t_61eb179793de3d 24-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "4c8715cc3ec1b4c84a97104001a15a3e5f15169c",
+  "prompts": {},
+  "sessions": {
+    "s_00515686725ddf": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "0d402375-839b-4715-822b-6fb1d0f602f9",
+        "model": "default"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
