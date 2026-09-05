@@ -1,0 +1,21 @@
+.github/workflows/deploy.yml
+  s_00515686725ddf::t_6cb8ec0f7e537c 34-35
+package.json
+  s_00515686725ddf::t_cd9d6a78cb572e 12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "c60c971416737712eccc6ba663d75c17a3cee000",
+  "prompts": {},
+  "sessions": {
+    "s_00515686725ddf": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "0d402375-839b-4715-822b-6fb1d0f602f9",
+        "model": "default"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
