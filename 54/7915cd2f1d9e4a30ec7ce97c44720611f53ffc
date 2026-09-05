@@ -1,0 +1,21 @@
+src/components/Footer.astro
+  s_00515686725ddf::t_c42181bd926f10 11,14-15
+src/styles/global.css
+  s_00515686725ddf::t_295d9bc908a0e8 68-69,82-83,85-86
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "547915cd2f1d9e4a30ec7ce97c44720611f53ffc",
+  "prompts": {},
+  "sessions": {
+    "s_00515686725ddf": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "0d402375-839b-4715-822b-6fb1d0f602f9",
+        "model": "default"
+      },
+      "human_author": "Takashi Aoki <taak77@gmail.com>"
+    }
+  }
+}
